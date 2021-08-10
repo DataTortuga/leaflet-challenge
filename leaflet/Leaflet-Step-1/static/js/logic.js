@@ -21,12 +21,13 @@ function createFeatures(earthquakeData) {
     var earthquakes = L.geoJSON(earthquakeData, {
       onEachFeature: onEachFeature
     });
-  
+    
+    
     // Send our earthquakes layer to the createMap function/
-    createMap(earthquakes);
+    createMap(earthquakes, earthquakeData);
   }
   
-  function createMap(earthquakes) {
+  function createMap(earthquakes, e_data) {
   
     // Create the base layers.
     var street = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -63,5 +64,20 @@ function createFeatures(earthquakeData) {
     L.control.layers(baseMaps, overlayMaps, {
       collapsed: false
     }).addTo(myMap);
+
+    d3.json(queryUrl).then(function (data) {
+        // Once we get a response, send the data.features object to the createFeatures function.
+        console.log(data);
+        createFeatures(data.features)
+      });
+    // Add circles to the map.
+    L.circle(e_data[i].geometry.coordinates, {
+    fillOpacity: 0.75,
+    color: "white",
+    fillColor: color,
+    // Adjust the radius.
+    radius: Math.sqrt(e_data[i].properties.mag) * 10000
+    }).addTo(myMap);
+    
   
   }
