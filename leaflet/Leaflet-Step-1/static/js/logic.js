@@ -71,18 +71,4 @@ function createFeatures(earthquakeData) {
     }).addTo(myMap);
 
     
-    // Add circles to the map.
-    // color = 'blue'
-    // for (var i = 0; i < e_data.length;i++) {
-    //     coor = [e_data[i].geometry.coordinates[1], e_data[i].geometry.coordinates[0]];
-    //     depth = e_data[i].geometry.coordinates[3];
-    //     L.circle(coor, {
-    //     fillOpacity: 0.75,
-    //     color: "black",
-    //     fillColor: color,
-    //     // Adjust the radius.
-    //     radius: Math.sqrt(e_data[i].properties.mag) * 100000
-    //     }).bindPopup(`<h3>${e_data[i].properties.place}</h3><hr><p>${new Date(e_data[i].properties.time)}</p>`).addTo(myMap);
-    
-    // }
   }
