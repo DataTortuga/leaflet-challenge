@@ -15,7 +15,22 @@ function createFeatures(earthquakeData) {
     color = 'blue'
     for (var i = 0; i < earthquakeData.length;i++) {
         coor = [earthquakeData[i].geometry.coordinates[1], earthquakeData[i].geometry.coordinates[0]];
-        depth = earthquakeData[i].geometry.coordinates[3];
+        depth = earthquakeData[i].geometry.coordinates[2];
+
+        var color = "";
+        if (depth > 50) {
+            color = "black";
+        }
+        else if (depth > 30) {
+            color = "blue";
+        }
+        else if (depth > 15) {
+            olor = "green";
+        }
+        else {
+            color = "red";
+        }   
+
         quakes.push(L.circle(coor, {
         fillOpacity: 0.75,
         color: "black",
@@ -70,8 +85,9 @@ function createFeatures(earthquakeData) {
       collapsed: false
     }).addTo(myMap);
 
-    // Add legend
-    legend.addTo(myMap)
+    // // Add legend
+    // var legend = L.control({position: "bottomright"});
+    // legend.addTo(myMap)
 
     
   }
