@@ -10,19 +10,24 @@ d3.json(queryUrl).then(function (data) {
 
 function createFeatures(earthquakeData) {
 
-    // Define a function that we want to run once for each feature in the features array.
-    // Give each feature a popup that describes the place and time of the earthquake.
-    function onEachFeature(feature, layer) {
-      layer.bindPopup(`<h3>${feature.properties.place}</h3><hr><p>${new Date(feature.properties.time)}</p>`);
+    var quakes = [];
+
+    color = 'blue'
+    for (var i = 0; i < earthquakeData.length;i++) {
+        coor = [earthquakeData[i].geometry.coordinates[1], earthquakeData[i].geometry.coordinates[0]];
+        depth = earthquakeData[i].geometry.coordinates[3];
+        quakes.push(L.circle(coor, {
+        fillOpacity: 0.75,
+        color: "black",
+        fillColor: color,
+        // Adjust the radius.
+        radius: Math.sqrt(earthquakeData[i].properties.mag) * 100000
+        }).bindPopup(`<h3>${earthquakeData[i].properties.place}</h3><hr><p>${new Date(earthquakeData[i].properties.time)}</p>`));
+    
     }
-  
-    // Create a GeoJSON layer that contains the features array on the earthquakeData object.
-    // Run the onEachFeature function once for each piece of data in the array.
-    var earthquakes = L.geoJSON(earthquakeData, {
-      onEachFeature: onEachFeature
-    });
-    
-    
+
+    earthquakes = L.layerGroup(quakes);
+
     // Send our earthquakes layer to the createMap function/
     createMap(earthquakes, earthquakeData);
   }
@@ -67,16 +72,17 @@ function createFeatures(earthquakeData) {
 
     
     // Add circles to the map.
-    color = 'blue'
-    for (var i = 0; i < e_data.length;i++) {
-        coor = [e_data[i].geometry.coordinates[1], e_data[i].geometry.coordinates[0]]
-        L.circle(coor, {
-        fillOpacity: 0.75,
-        color: "black",
-        fillColor: color,
-        // Adjust the radius.
-        radius: Math.sqrt(e_data[i].properties.mag) * 100000
-        }).addTo(myMap);
+    // color = 'blue'
+    // for (var i = 0; i < e_data.length;i++) {
+    //     coor = [e_data[i].geometry.coordinates[1], e_data[i].geometry.coordinates[0]];
+    //     depth = e_data[i].geometry.coordinates[3];
+    //     L.circle(coor, {
+    //     fillOpacity: 0.75,
+    //     color: "black",
+    //     fillColor: color,
+    //     // Adjust the radius.
+    //     radius: Math.sqrt(e_data[i].properties.mag) * 100000
+    //     }).bindPopup(`<h3>${e_data[i].properties.place}</h3><hr><p>${new Date(e_data[i].properties.time)}</p>`).addTo(myMap);
     
-    }
+    // }
   }
