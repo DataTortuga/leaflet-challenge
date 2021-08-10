@@ -65,19 +65,18 @@ function createFeatures(earthquakeData) {
       collapsed: false
     }).addTo(myMap);
 
-    d3.json(queryUrl).then(function (data) {
-        // Once we get a response, send the data.features object to the createFeatures function.
-        console.log(data);
-        createFeatures(data.features)
-      });
-    // Add circles to the map.
-    L.circle(e_data[i].geometry.coordinates, {
-    fillOpacity: 0.75,
-    color: "white",
-    fillColor: color,
-    // Adjust the radius.
-    radius: Math.sqrt(e_data[i].properties.mag) * 10000
-    }).addTo(myMap);
     
-  
+    // Add circles to the map.
+    color = 'blue'
+    for (var i = 0; i < e_data.length;i++) {
+        coor = [e_data[i].geometry.coordinates[1], e_data[i].geometry.coordinates[0]]
+        L.circle(coor, {
+        fillOpacity: 0.75,
+        color: "black",
+        fillColor: color,
+        // Adjust the radius.
+        radius: Math.sqrt(e_data[i].properties.mag) * 100000
+        }).addTo(myMap);
+    
+    }
   }
