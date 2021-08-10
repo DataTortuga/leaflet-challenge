@@ -70,5 +70,8 @@ function createFeatures(earthquakeData) {
       collapsed: false
     }).addTo(myMap);
 
+    // Add legend
+    legend.addTo(myMap)
+
     
   }
